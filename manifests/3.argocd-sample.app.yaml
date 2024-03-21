@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: oci-demo
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: demo
+  project: default
+  source:
+    path: ./ # path is unsued
+    plugin: {}
+    repoURL: oci://quay.io/christianh814/oci-storage-test
+    targetRevision: nginxyaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cmp-plugin
+  namespace: argocd
+data:
+  plugin.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ConfigManagementPlugin
+    metadata:
+      name: cmp-plugin
+    spec:
+      version: v1.0
+      init:
+        command: [sh, -c, 'echo "Initializing..."']
+      generate:
+        command: [sh, -c]
+        args:
+          - |
+            url=${ARGOCD_APP_SOURCE_REPO_URL}
+            proto="$(echo ${url} | grep :// | sed -e's,^\(.*://\).*,\1,g')"
+            cleanurl=$(echo ${url} | sed -e s,${proto},,g)
+            if [[ ${proto} =~ "oci" ]] ; then
+              mkdir -p ./manifests
+              cd ./manifests
+              /usr/local/bin/oras pull ${ARGOCD_APP_SOURCE_REPO_URL}:${ARGOCD_APP_SOURCE_TARGET_REVISION}
+              for i in $(ls -1 *.yaml)
+              do
+                cat ${i}
+              done
+            fi
+            fi
