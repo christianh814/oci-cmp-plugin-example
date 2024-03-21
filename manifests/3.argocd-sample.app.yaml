@@ -12,7 +12,10 @@ spec:
     path: ./ # path is unsued
     plugin:
       name: cmp-plugin
-    repoURL: oci://quay.io/christianh814/oci-storage-test
+      env:
+        - name: ENABLE_OCI
+          value: "yes"
+    repoURL: quay.io/christianh814/oci-storage-test
     targetRevision: nginxyaml
   syncPolicy:
     automated:
