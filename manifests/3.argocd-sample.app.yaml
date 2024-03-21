@@ -10,7 +10,8 @@ spec:
   project: default
   source:
     path: ./ # path is unsued
-    plugin: {}
+    plugin:
+      name: cmp-plugin
     repoURL: oci://quay.io/christianh814/oci-storage-test
     targetRevision: nginxyaml
   syncPolicy:
