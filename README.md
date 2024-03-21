@@ -10,5 +10,5 @@ kubectl apply -f manifests/3.argocd-sample.app.yaml
 verify
 
 ```bash
-kubectl get cm -n default
+kubectl get pods -n demo
 ```
